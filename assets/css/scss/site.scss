@@ -1,0 +1,353 @@
+$prefix: "gwh";
+
+@import 'reset';
+
+
+.alert-text{
+	color: red;
+}
+
+.rtl{
+	unicode-bidi: bidi-override;
+	direction: rtl;
+}
+
+.disable-hover,
+.disable-hover * {
+	pointer-events: none !important;
+}
+
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0,0,0,0);
+	border: 0;
+}
+
+fieldset{
+	legend{
+		font-size: 30px;
+	}
+}
+
+.#{$prefix}-init-form,
+.#{$prefix}-search-form {
+	margin-bottom: 20px;
+	
+	[disabled]{
+		display: none;
+	}
+}
+
+.#{$prefix}-search-form {
+	position: sticky;
+	padding: 10px 0;
+	top: 0;
+	z-index: 10000;
+	background-color: rgba(255, 255, 255, 0.3);
+	backdrop-filter: blur(6px) saturate(100%) contrast(45%) brightness(138%);
+	
+	@supports not (backdrop-filter: blur(6px) saturate(100%) contrast(45%) brightness(138%)) {
+		background-color: #fff;
+		
+		&:after {
+			content: '';
+			position: absolute;
+			height: 20px;
+			width: 100%;
+			left: 0;
+			top: 100%;
+			background: linear-gradient(#fff, transparent);
+		}
+	}
+	
+	fieldset{
+		position: relative;
+	}
+	
+	legend{
+		transition: all linear .2s;
+	}
+	&.isSticky legend{
+		font-size: 0;
+		line-height: 0;
+		margin: 0;
+	}
+}
+
+
+@media screen and (min-width: 1024px){
+	.#{$prefix}-main-holder{
+		display: grid;
+		grid-template-areas: "main aside";
+		grid-template-columns: 1fr 25%;
+		grid-gap: 0;
+	}
+	.#{$prefix}-aside {
+		--vgap: 70px;
+		
+		grid-area: aside;
+		position: sticky;
+		top: var(--vgap);
+		max-height: calc(100vh - var(--vgap) * 2);
+		height: min-content;
+		overflow: hidden;
+	}
+	
+	.#{$prefix}-main{
+		grid-area: main;
+	}
+}
+
+.#{$prefix}-aside{
+	display: grid;
+	grid-template-areas: "aside-title" "downloaded-fonts";
+	grid-template-rows: minmax(calc(1.5em + 2rem), auto) 1fr;
+	grid-template-columns: 100%;
+	grid-gap: 0;
+	padding: 0 10px;
+	
+	h2{
+		grid-area: aside-title;
+		margin-bottom: calc(2rem - 20px);
+	}
+}
+
+.#{$prefix}-downloaded-fonts-list{
+	grid-area: downloaded-fonts;
+	position: relative;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	overflow-y: auto;
+	counter-reset: title-downloaded;
+	
+	&:before{
+		content: '';
+		position: sticky;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 20px;
+		background: linear-gradient(#fff, transparent);
+		display: block;
+	}
+	
+	* {
+		font-weight: inherit;
+	}
+	
+	.title{
+		&:before{
+			padding: 0 10px 0 0;
+			counter-increment: title-downloaded;
+			content:counter(title-downloaded, decimal)".";
+		}
+	}
+	
+	.family-delete-link{
+		float: right;
+		color: red;
+	}
+	
+	.open-close-link.active + .family-delete-link{
+		display: none;
+	}
+	
+	.variation-title{
+		small {
+			background: gray;
+			padding: 0 3px;
+			color: white;
+			border-radius: 3px;
+		}
+	}
+	
+	.variation-delete-link{
+		float: right;
+		color: red;
+	}
+	
+	.cyrillic + .cyrillic-ext,
+	.greek + .greek-ext,
+	.latin + .latin-ext{
+		display: none;
+	}
+	&:not(:empty) + p{
+		display: none;
+	}
+}
+
+
+
+.#{$prefix}-main{
+	padding: 0 10px;
+}
+
+.#{$prefix}-available-fonts-list {
+	--items_cells: 3;
+	--items_cells_gap: 20px;
+	
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--items_cells_gap);
+	
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	counter-reset: title-available;
+	
+	&[class*="subset-"]{
+		.font-summary{
+			p{
+				display: none;
+			}
+		}
+	}
+	&:not([class*="-ext"]){
+		.font-summary{
+			[class*="-ext"]{
+				display: none;
+			}
+		}
+	}
+	
+	> li{
+		padding: 0;
+		flex-basis: calc((100% / var(--items_cells)) - (var(--items_cells_gap) - var(--items_cells_gap) / var(--items_cells)));
+		
+		
+		.title{
+			margin-bottom: 1rem;
+			
+			&:before{
+				color: red;
+				padding: 0 10px 0 0;
+				counter-increment: title-available;
+				content:counter(title-available, decimal)".";
+			}
+		}
+		
+		.font-summary{
+			height: auto;
+			border: 0;
+			
+			&:focus,
+			&:hover {
+				text-decoration: none;
+				
+				p{
+					text-decoration: underline;
+				}
+			}
+		}
+		
+		&.active{
+			flex-basis: 100%;
+			
+			.font-summary{
+				height: auto;
+				border: 0;
+				
+				p{
+					display: none !important;
+				}
+			}
+			
+			.font-details{
+				display: block !important;
+			}
+		}
+	}
+	
+	&.subset-arabic .arabic,
+	&.subset-bengali .bengali,
+	&.subset-chinese-hongkong .chinese-hongkong,
+	&.subset-chinese-simplified .chinese-simplified,
+	&.subset-chinese-traditional .chinese-traditional,
+	&.subset-cyrillic .cyrillic,
+	&.subset-cyrillic-ext .cyrillic-ext,
+	&.subset-devanagari .devanagari,
+	&.subset-greek .greek,
+	&.subset-greek-ext .greek-ext,
+	&.subset-gujarati .gujarati,
+	&.subset-gurmukhi .gurmukhi,
+	&.subset-hebrew .hebrew,
+	&.subset-japanese .japanese,
+	&.subset-kannada .kannada,
+	&.subset-khmer .khmer,
+	&.subset-korean .korean,
+	&.subset-latin .latin,
+	&.subset-latin-ext .latin-ext,
+	&.subset-malayalam .malayalam,
+	&.subset-myanmar .myanmar,
+	&.subset-oriya .oriya,
+	&.subset-sinhala .sinhala,
+	&.subset-tamil .tamil,
+	&.subset-telugu .telugu,
+	&.subset-thai .thai,
+	&.subset-tibetan .tibetan,
+	&.subset-vietnamese .vietnamese{
+		display: block !important;
+	}
+	
+	.subsets-holder{
+		margin: 0 0 15px;
+		
+		label{
+			vertical-align: middle;
+			margin: 0 10px 0 0;
+			
+			&:not(:last-of-type):after{
+				content: ',';
+			}
+		}
+		
+		input{
+			vertical-align: middle;
+			margin: 0 5px 0 0;
+		}
+	}
+	.subsets-title{
+		margin: 0 0 5px;
+	}
+	
+	.variation-title{
+		font-weight: inherit;
+	}
+}
+
+
+@media screen and (max-width: calc(768px - .02px)){
+	.#{$prefix}-available-fonts-list {
+		--items_cells: 2;
+	}
+}
+
+@import 'loader';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

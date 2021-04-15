@@ -1,0 +1,28 @@
+.loader {
+	//pointer-events: none !important;
+	
+	&:after {
+		content: " ";
+		display: block;
+		width: 64px;
+		height: 64px;
+		margin: 8px;
+		border-radius: 50%;
+		border: 6px solid;
+		border-color: #000 transparent #000 transparent;
+		animation: loader 1.2s linear infinite;
+		
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		z-index: 10001;
+	}
+}
+@keyframes loader {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}

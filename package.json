@@ -1,0 +1,23 @@
+{
+  "name": "test",
+  "version": "0.0.1",
+  "description": "Gulp start!",
+  "devDependencies": {
+    "@babel/core": "^7.13.8",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-syntax-class-properties": "^7.12.13",
+    "@babel/preset-env": "^7.13.8",
+    "autoprefixer": "^10.2.4",
+    "browser-sync": "^2.26.14",
+    "core-js": "^3.9.1",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-postcss": "^9.0.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^4.1.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-terser": "^2.0.1",
+    "precss": "^4.0.0"
+  }
+}
