@@ -354,10 +354,6 @@ template {
   border: 0;
 }
 
-/*
-[disabled]{
-	display: none;
-}*/
 fieldset legend {
   font-size: 30px;
 }

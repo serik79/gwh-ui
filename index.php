@@ -3,33 +3,12 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Fonts API ;)</title>
+	<title>Google Webfonts Helper User Interface ;)</title>
 	<link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body>
 	<h1>Google Webfonts Helper User Interface</h1>
-	<h2>TODO list:</h2>
-	<ol>
-		<li>Внешний вид</li>
-		<li>Удаление базы доступных шрифтов</li>
-		<li>Удаление базы и файлов загруженных шрифтов</li>
-		<li>Лоадер при загрузке гугл шрифтов через css. Предположительно с помощью <a target="_blank" href="https://fontfaceobserver.com/">fontfaceobserver</a>.</li>
-		<li>На фоне через serviceWorker проверять актуальность базы (как плагина так и google-webfonts-helper)</li>
-		<li>Написать комментарии</li>
-		<li>Переделать _createDownloadedFontsList()</li>
-		<li>Колбэки после загрузки шрифтов и т.д.</li>
-	</ol>
-	
-	<h2>Links list:</h2>
-	<ol>
-		<li><a href="https://habr.com/ru/company/vdsina/blog/533208/" target="_blank">До свидания, Google Fonts. Последний аргумент</a></li>
-		<li><a href="https://google-webfonts-helper.herokuapp.com/fonts" target="_blank">google-webfonts-helper</a></li>
-		<li><a href="https://github.com/majodev/google-webfonts-helper" target="_blank">google-webfonts-helper (github.com)</a></li>
-<!--		<li><a href="https://cors-anywhere.herokuapp.com/" target="_blank">cors-anywhere.herokuapp.com</a></li>-->
-		<li><a href="http://mdn.github.io/to-do-notifications/" target="_blank">indexedDB example from MDN (mdn.github.i)</a></li>
-	</ol>
-	
 	<form action="ajax.php" id="GWH_init_form" class="gwh-init-form" method="post">
 		<fieldset id="GWH_init_fieldset">
 			<legend>Init</legend>
