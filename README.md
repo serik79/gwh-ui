@@ -3,7 +3,7 @@ google-webfonts-helper user interface
 
 This is nothing more than an attempt to make downloading google fonts more convenient. 
 The coolest [google-webfonts-helper](https://google-webfonts-helper.herokuapp.com/fonts) from
-[Mario Ranftl](https://mranftl.com/) - @majodev ([License](https://majodev.mit-license.org/))  to download the base and font files, 
+[Mario Ranftl](https://mranftl.com/) - [@majodev](https://github.com/majodev) ([License](https://majodev.mit-license.org/))  to download the base and font files, 
 as well as directly [Google Fonts](https://fonts.google.com/) ([License](https://fonts.google.com/attribution)) as a source of design, 
 functionality and preview fonts.
 
