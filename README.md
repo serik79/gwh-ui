@@ -8,8 +8,9 @@ as well as directly [Google Fonts](https://fonts.google.com/) ([License](https:/
 functionality and preview fonts.
 
 ### Links List:
-1. [google-webfonts-helper](https://google-webfonts-helper.herokuapp.com/fonts)
+1. [google-webfonts-helper (home)](https://google-webfonts-helper.herokuapp.com/fonts)
 2. [google-webfonts-helper (github.com)](https://github.com/majodev/google-webfonts-helper)
+2. [Google Fonts](https://fonts.google.com/)
 3. [indexedDB example from MDN (mdn.github.i)](http://mdn.github.io/to-do-notifications/)
 
 ## Init:
