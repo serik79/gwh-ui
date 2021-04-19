@@ -41,8 +41,8 @@ function reloadPage() {
 
 
 
-function getFetchResponse(request = {}) {
-	return fetch('ajaxj.php', {
+function getFetchResponse(request = {}, input = '') {
+	return fetch(input, {
 		method: 'POST',
 		body: JSON.stringify(request)
 	})

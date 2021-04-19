@@ -43,6 +43,7 @@ class GWHelper {
 			available_fonts_store_name: 'available_fonts',
 			downloaded_fonts_store_name: 'downloaded_fonts',
 			db_name: 'fontsDB',
+			input_url: 'ajax.php',
 			db_version: 1,
 		}
 		Object.assign(this.options, options);
@@ -131,7 +132,7 @@ class GWHelper {
 								.catch(err => console.error(err));
 						};
 						
-						getFetchResponse(request)
+						getFetchResponse(request, this.input_url)
 							.then(data => contentHandler(data))
 							.catch(err => {
 								console.error(err);
@@ -168,6 +169,7 @@ class GWHelper {
 		this.GWH_url = 'https://google-webfonts-helper.herokuapp.com/api/fonts';
 		this.font_detalis_id_prefix = this.options.font_detalis_id_prefix || 'GWH_font_details_';
 		this.fonts_path = this.options.fonts_path || '/assets/fonts/';
+		this.input_url = this.options.input_url || 'ajax.php';
 	}
 	
 	_findElements() {
@@ -567,7 +569,7 @@ class GWHelper {
 					reject(`Chose the subset(s), please!`); return;
 				}
 				if (!result) {
-					getFetchResponse(request)
+					getFetchResponse(request, this.input_url)
 						.then(data => {
 							get_store(resolve, reject, data)
 								.add(data.font);
@@ -579,7 +581,7 @@ class GWHelper {
 				} else {
 					
 					if(!(variant in result.variants)){
-						getFetchResponse(request)
+						getFetchResponse(request, this.input_url)
 							.then(data => {
 								let store = get_store(resolve, reject, data);
 								Object.assign(result.variants, data.font.variants);
@@ -597,9 +599,9 @@ class GWHelper {
 							getFetchResponse({
 								action: 'delete_font',
 								font: result.variants[variant].files
-							})
+							}, this.input_url)
 								.then(() => {
-									getFetchResponse(request)
+									getFetchResponse(request, this.input_url)
 										.then(data => {
 											let store = get_store(resolve, reject, data);
 											Object.assign(result.variants, data.font.variants);
@@ -656,7 +658,7 @@ class GWHelper {
 							getFetchResponse({
 								action: 'delete_font',
 								font: value.variants[v].files
-							})
+							}, this.input_url)
 								.then((data) => {
 									let store = this.indDB._transaction(store_name, {
 										complete: () => {
@@ -733,7 +735,7 @@ class GWHelper {
 						getFetchResponse({
 							action: 'delete_font',
 							font: Object.values(value.variants).map(f => f.files).flat()
-						})
+						}, this.input_url)
 							.then(() => {
 								this.indDB._transaction(store_name, {
 									complete: (data) => {
