@@ -110,11 +110,12 @@ class GWHelper {
 					.finally(setLoader(false));
 			};
 			
+			const transaction = this.indDB._transaction([this.options.available_fonts_store_name, this.options.downloaded_fonts_store_name]);
+			
 			/**
-			 * Проверить, содержит ли таблица fonts записи и если нет, сделать
+			 * Проверить, содержит ли таблица available_fonts записи и если нет, сделать
 			 * запрос на сервер
 			 * */
-			const transaction = this.indDB._transaction([this.options.available_fonts_store_name, this.options.downloaded_fonts_store_name]);
 			transaction.objectStore(this.options.available_fonts_store_name)
 				.count().onsuccess = (e) => {
 					if (!e.target.result) {
@@ -131,11 +132,20 @@ class GWHelper {
 						};
 						
 						getFetchResponse(request)
-							.then(data => contentHandler(data));
+							.then(data => contentHandler(data))
+							.catch(err => {
+								console.error(err);
+								setLoader(false);
+							});
 					} else {
 						mainHandler();
 					}
 			}
+			
+			/**
+			 * Проверить, содержит ли таблица downloaded_fonts записи и если нет, сделать
+			 * запрос на сервер
+			 * */
 			transaction.objectStore(this.options.downloaded_fonts_store_name)
 				.count().onsuccess = (e) => {
 					if (e.target.result) {
@@ -561,6 +571,10 @@ class GWHelper {
 						.then(data => {
 							get_store(resolve, reject, data)
 								.add(data.font);
+						})
+						.catch(err => {
+							console.error(err);
+							setLoader(false);
 						});
 				} else {
 					
@@ -570,6 +584,10 @@ class GWHelper {
 								let store = get_store(resolve, reject, data);
 								Object.assign(result.variants, data.font.variants);
 								store.put(result);
+							})
+							.catch(err => {
+								console.error(err);
+								setLoader(false);
 							});
 					} else {
 						let result_subsets = result.variants[variant].subsets.split(',');
@@ -586,7 +604,15 @@ class GWHelper {
 											let store = get_store(resolve, reject, data);
 											Object.assign(result.variants, data.font.variants);
 											store.put(result);
+										})
+										.catch(err => {
+											console.error(err);
+											setLoader(false);
 										});
+								})
+								.catch(err => {
+									console.error(err);
+									setLoader(false);
 								});
 						} else reject(`The font ${result.family + ' ' + variant} is exists!`);
 					}
@@ -613,6 +639,7 @@ class GWHelper {
 					fonts.className = 'font-downloaded-details';
 					fonts.id = this.font_detalis_id_prefix + '_downloaded_' + value.id;
 					fonts.setAttribute('hidden', '');
+					const open_close_link = document.createElement('a');
 					
 					sortVariants(variants).forEach((v) => {
 						const subsets = (value.variants[v].subsets).split(',');
@@ -636,6 +663,13 @@ class GWHelper {
 											this._createDownloadedFontsList(data)
 												.then(list => {
 													console.log(list);
+													
+													/** TODO: make the open-close link open and scroll back */
+													// if (open_close_link) {
+													// 	console.log(open_close_link);
+													// 	open_close_link.dispatchEvent(new Event('click'));
+													// }
+													
 												});
 										}
 									}, 'readwrite').objectStore(store_name);
@@ -644,6 +678,10 @@ class GWHelper {
 										delete value.variants[v];
 										store.put(value);
 									} else store.delete(value.id);
+								})
+								.catch(err => {
+									console.error(err);
+									setLoader(false);
 								});
 						}
 						
@@ -705,10 +743,14 @@ class GWHelper {
 											});
 									}
 								}, 'readwrite').objectStore(store_name).delete(value.id);
+							})
+							.catch(err => {
+								console.error(err);
+								setLoader(false);
 							});
 					}
 					
-					const open_close_link = document.createElement('a');
+					// const open_close_link = document.createElement('a');
 					open_close_link.className = 'open-close-link';
 					open_close_link.href = '#' + this.font_detalis_id_prefix + '_downloaded_' + value.id;
 					open_close_link.innerHTML = `${value.family + count_variants}`;

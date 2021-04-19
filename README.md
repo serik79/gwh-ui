@@ -23,6 +23,7 @@ new GWHelper({
 
 ### TODO List:
 - [ ] Tidy up the appearance.
+    - [ ] Make the open-close link expand and return the scroll when deleting a font variant in aside.
 - [ ] Removing the base of available fonts.
 - [ ] Removing the base and files of downloaded fonts.
 - [ ] Loader when loading google fonts via css. Presumably with the help of [Font Face Observer](https://fontfaceobserver.com/).

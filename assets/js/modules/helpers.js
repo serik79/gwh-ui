@@ -42,20 +42,26 @@ function reloadPage() {
 
 
 function getFetchResponse(request = {}) {
-	return fetch('ajax.php', {
+	return fetch('ajaxj.php', {
 		method: 'POST',
 		body: JSON.stringify(request)
 	})
-		.then((response) => response.json())
+		.then((response) => {
+			if (response.ok) {
+				return response.json();
+			} else {
+				throw new Error(`Server error: ${response.url} response ${response.status}, "${response.statusText}"`)
+			}
+		})
 		.then((contents) => {
 			if ('error' in contents) throw new Error(contents.error);
 			if ('success' in contents) console.warn('SUCCESS in fetch response: ', contents.success);
 			return contents;
 		})
 		.catch((err) => {
-			
 			/** TODO: display in warnings */
-			console.error('ERROR in fetch: '+ err.message);
+			// console.error('ERROR in fetch: '+ err.message);
+			throw new Error('ERROR in fetch: '+ err.message);
 		});
 }
 
